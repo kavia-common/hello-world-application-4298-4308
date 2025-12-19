@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load ui_buttons %}
+
+{% block content %}
+<h1>Hello, World!</h1>
+<p class="muted">Below are examples of the global button with new variants, icons, and states.</p>
+
+<h2>Variants</h2>
+<div class="demo-row">
+  {% button "Primary" variant="primary" %}
+  {% button "Secondary" variant="secondary" %}
+  {% button "Success" variant="success" %}
+  {% button "Outline" variant="outline" %}
+  {% button "Ghost" variant="ghost" %}
+  {% button "Link" variant="link" href="#" %}
+</div>
+
+<h2>Sizes</h2>
+<div class="demo-row">
+  {% button "Small" size="sm" %}
+  {% button "Medium" size="md" %}
+  {% button "Large" size="lg" %}
+</div>
+
+<h2>Icons</h2>
+<div class="demo-row">
+  {% button "With Left Icon" icon_left="i-left" %}
+  {% button "With Right Icon" icon_right="i-right" %}
+  {% button "Both Icons" icon_left="i-left" icon_right="i-right" %}
+  {% button "As Link With Icon" href="#" icon_left="i-link" variant="link" %}
+</div>
+
+<h2>States</h2>
+<div class="demo-row">
+  {% button "Disabled Button" disabled=True %}
+  {% button "Disabled Link" href="#" disabled=True variant="outline" %}
+  {% button "Loading Button" loading=True variant="primary" %}
+  {% button "Loading Link" href="#" loading=True variant="link" %}
+</div>
+
+{% endblock %}

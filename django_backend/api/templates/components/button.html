@@ -1,0 +1,53 @@
+{% load static %}
+{# Accessible reusable button component #}
+{# Renders either <button> or <a> based on presence of href #}
+
+{% if href %}
+  <a
+    href="{{ href }}"
+    id="{{ attrs.id|default_if_none:'' }}"
+    class="{{ attrs.class }}"
+    title="{{ attrs.title }}"
+    {% if attrs.aria_label %}aria-label="{{ attrs.aria_label }}"{% endif %}
+    role="button"
+    aria-disabled="{{ attrs.aria_disabled }}"
+    aria-busy="{{ attrs.aria_busy }}"
+    data-prevent-click="{{ disabled|yesno:'true,false' }}"
+    data-prevent-click-loading="{{ loading|yesno:'true,false' }}"
+    onclick="if (this.getAttribute('data-prevent-click')==='true' || this.getAttribute('data-prevent-click-loading')==='true'){ event.preventDefault(); return false; }"
+  >
+    {% if loading %}
+      <span class="ui-btn__spinner" aria-hidden="true"></span>
+    {% endif %}
+    {% if icon_left %}
+      <span class="ui-btn__icon ui-btn__icon--left {{ icon_left }}" aria-hidden="true"></span>
+    {% endif %}
+    <span class="ui-btn__label">{{ button_label }}</span>
+    {% if icon_right %}
+      <span class="ui-btn__icon ui-btn__icon--right {{ icon_right }}" aria-hidden="true"></span>
+    {% endif %}
+  </a>
+{% else %}
+  <button
+    id="{{ attrs.id|default_if_none:'' }}"
+    class="{{ attrs.class }}"
+    title="{{ attrs.title }}"
+    {% if attrs.aria_label %}aria-label="{{ attrs.aria_label }}"{% endif %}
+    type="{{ attrs.type }}"
+    name="{{ attrs.name }}"
+    value="{{ attrs.value }}"
+    {% if disabled %}disabled{% endif %}
+    aria-busy="{{ attrs.aria_busy }}"
+  >
+    {% if loading %}
+      <span class="ui-btn__spinner" aria-hidden="true"></span>
+    {% endif %}
+    {% if icon_left %}
+      <span class="ui-btn__icon ui-btn__icon--left {{ icon_left }}" aria-hidden="true"></span>
+    {% endif %}
+    <span class="ui-btn__label">{{ button_label }}</span>
+    {% if icon_right %}
+      <span class="ui-btn__icon ui-btn__icon--right {{ icon_right }}" aria-hidden="true"></span>
+    {% endif %}
+  </button>
+{% endif %}
