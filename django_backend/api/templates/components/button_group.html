@@ -1,0 +1,29 @@
+{% load ui_buttons %}
+{# Button Group component: renders a group of buttons using the existing {% button %} tag #}
+{# Context:
+   items: list of {label, href, variant, size, icon_left, icon_right, disabled, loading}
+   orientation: "horizontal"|"vertical"
+   size: "sm"|"md"|"lg"
+   aria_label: optional
+#}
+
+{% with
+   group_orientation=orientation|default:"horizontal" 
+   group_size=size|default:"md"
+%}
+<div class="btn-group btn-group--{{ group_orientation }} btn-group--{{ group_size }}" role="group" {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}>
+  {% for b in items %}
+    {# Reuse the button tag for actual button rendering. Safe defaults are applied in the tag. #}
+    {% button
+      b.label
+      href=b.href
+      variant=b.variant|default:"primary"
+      size=b.size|default:group_size
+      icon_left=b.icon_left
+      icon_right=b.icon_right
+      disabled=b.disabled|default:False
+      loading=b.loading|default:False
+    %}
+  {% endfor %}
+</div>
+{% endwith %}

@@ -1,0 +1,136 @@
+ /* Button Group and Toolbar Component Styles */
+
+:root {
+  --ui-primary: #3b82f6;
+  --ui-success: #06b6d4;
+  --ui-secondary: #64748b;
+  --ui-surface: #ffffff;
+  --ui-text: #111827;
+  --ui-focus: 2px solid rgba(59, 130, 246, 0.6);
+  --ui-radius: 0.5rem;
+  --ui-gap: 0.5rem;
+
+  --ui-border-color: rgba(17, 24, 39, 0.12);
+  --ui-border-color-strong: rgba(17, 24, 39, 0.2);
+}
+
+/* Base group container */
+.btn-group {
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: stretch;
+  gap: 0; /* collapse internal gaps; borders will "merge" */
+  border-radius: var(--ui-radius);
+}
+
+.btn-group--horizontal {
+  flex-direction: row;
+}
+
+.btn-group--vertical {
+  flex-direction: column;
+}
+
+/* Make buttons in a group appear as one merged control */
+.btn-group .ui-btn {
+  border-radius: 0;
+  position: relative;
+}
+
+/* First and last buttons rounded corners */
+.btn-group--horizontal .ui-btn:first-child {
+  border-top-left-radius: var(--ui-radius);
+  border-bottom-left-radius: var(--ui-radius);
+}
+.btn-group--horizontal .ui-btn:last-child {
+  border-top-right-radius: var(--ui-radius);
+  border-bottom-right-radius: var(--ui-radius);
+}
+
+.btn-group--vertical .ui-btn:first-child {
+  border-top-left-radius: var(--ui-radius);
+  border-top-right-radius: var(--ui-radius);
+}
+.btn-group--vertical .ui-btn:last-child {
+  border-bottom-left-radius: var(--ui-radius);
+  border-bottom-right-radius: var(--ui-radius);
+}
+
+/* Collapse adjacent borders for a clean merged look */
+.btn-group--horizontal .ui-btn + .ui-btn {
+  margin-left: -1px; /* overlap borders */
+}
+.btn-group--vertical .ui-btn + .ui-btn {
+  margin-top: -1px;
+}
+
+/* Ensure border colors are consistent between different variants when merged */
+.btn-group .ui-btn {
+  /* Use existing border from button variants; fallback color for ghost/link */
+  border-color: currentColor;
+}
+.btn-group .ui-btn.ui-btn--ghost,
+.btn-group .ui-btn.ui-btn--link {
+  border-color: var(--ui-border-color);
+  border-style: solid;
+  border-width: 1px;
+  background-clip: padding-box;
+}
+
+/* Hover state - keep seam clean */
+.btn-group .ui-btn:hover {
+  z-index: 1; /* lift hovered button so its border is on top */
+}
+
+/* Focus handling within groups */
+.btn-group .ui-btn:focus-visible {
+  outline: var(--ui-focus);
+  outline-offset: -1px; /* keep ring tight to merged edges */
+  z-index: 2;
+}
+
+/* Size mapping: group wrapper provides no padding; rely on button sizes.
+   Provide helper classes for group sizing to keep parity with button sizes. */
+.btn-group--sm .ui-btn { /* no overrides needed; semantic helper class only */ }
+.btn-group--md .ui-btn { /* semantic helper */ }
+.btn-group--lg .ui-btn { /* semantic helper */ }
+
+/* Toolbar: wraps multiple groups with spacing and responsive wrapping */
+.btn-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem; /* spacing between groups */
+  align-items: center;
+}
+
+.btn-toolbar--gap-sm { gap: 0.25rem; }
+.btn-toolbar--gap-md { gap: 0.5rem; }
+.btn-toolbar--gap-lg { gap: 0.75rem; }
+
+/* Toolbar groups can also stack on small screens if desired; provide utility */
+@media (max-width: 480px) {
+  .btn-toolbar.is-responsive {
+    gap: 0.5rem 0.5rem;
+  }
+  .btn-toolbar.is-responsive .btn-group--horizontal {
+    flex-wrap: nowrap;
+  }
+}
+
+/* Make sure link/ghost in groups maintain clear hit area and contrast on hover */
+.btn-group .ui-btn.ui-btn--link:hover {
+  text-decoration: none;
+  background-color: rgba(59, 130, 246, 0.08);
+}
+.btn-group .ui-btn.ui-btn--ghost:hover {
+  background-color: rgba(17, 24, 39, 0.06);
+}
+
+/* Disabled handling within groups */
+.btn-group .ui-btn.is-disabled,
+.btn-group .ui-btn[disabled],
+.btn-group .ui-btn[aria-disabled="true"] {
+  z-index: 0;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
